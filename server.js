@@ -1,16 +1,18 @@
-const express = require("express");
+const express = require('express');
+const routes = require('./app/routes/routes.js');
+
 const app = express();
+const port = 5000;
+app.set("view engine", "ejs");
+app.set('views', './app/views'); //Definição do local das views
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('./public'))
 
-const port = process.env.PORT || 5000;
+routes.home(app);
+routes.login(app);
+routes.servicos(app);
+routes.adm(app);
 
-app.get("/", (req, res) => {
-  return res.status(200).send({
-    message: "Hello World!",
-  });
-});
-
-app.listen(port, () => {
-  console.log("Listening on " + port);
-});
-
-module.exports = app;
+app.listen(port, function () {
+    console.log('Servidor rodando na porta: ', port);
+})
