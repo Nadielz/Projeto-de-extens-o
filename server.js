@@ -8,10 +8,13 @@ app.set('views', './app/views'); //Definição do local das views
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public'))
 
-routes.home(app);
-routes.login(app);
-routes.servicos(app);
-routes.adm(app);
+
+app.use(
+  "/bootstrap",
+  express.static(path.join(__dirname, "node_modules/bootstrap/dist"))
+);
+
+routes(app);
 
 app.listen(port, function () {
     console.log('Servidor rodando na porta: ', port);

@@ -1,0 +1,9 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.barraNavegacao {
+  background-color: #4A148C !important; /* Um tom de roxo, por exemplo */
+}
+
