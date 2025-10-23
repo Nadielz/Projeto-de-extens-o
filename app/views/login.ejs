@@ -4,30 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Site</title>
-    <link rel="stylesheet" href="/style.css">
-
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<%- include('partials/header', {titulo: 'Página login'}) %>
+
+<%- include('partials/header', {titulo: 'Página de Acesso'}) %>
+
 <body>
     <main>
-        <h1>login</h1>
+        <div class="container-forms">
+            
+            <section class="form-login">
+                <h2>Login</h2>
+                
+                <form action="/login" method="POST">
+                    <div>
+                        <label for="login-usuario">Usuário</label>
+                          
+
+                        <input type="text" id="login-usuario" name="usuario" required>
+                    </div>
+                      
+
+                    <div>
+                        <label for="login-senha">Senha</label>
+                          
+
+                        <input type="password" id="login-senha" name="senha" required>
+                    </div>
+                      
+
+                    <button type="submit">Entrar</button>
+                </form>
+            </section>
+
+            
+            <section class="form-cadastro">
+                <h2>Cadastro</h2>
+                
+                <form action="/cadastro" method="POST">
+                    
+                    <div>
+                        <label for="nome">Nome</label>
+                          
+
+                        <input type="text" id="nome" name="nome" required>
+                    </div>
+                                          
+                    
+                    <div>
+                        <label for="email">E-mail</label>
+                          
+
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                      
+
+                    
+                    <div>
+                        <label for="sexo">Sexo</label>
+                          
+
+                        <select id="sexo" name="sexo" >
+                            <option value="">Selecione</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Feminino">Feminino</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                      
+
+                    
+                    <div>
+                        <label for="telefone">Telefone</label>
+                          
+
+                        <input type="tel" id="telefone" name="telefone" pattern="[0-9]{10,11}" title="Telefone com DDD (ex: 11987654321)">
+                    </div>
+                      
+
+                    
+                    <div>
+                        <label for="cadastro-senha">Senha</label>
+                          
+
+                        <input type="password" id="cadastro-senha" name="senha" required>
+                    </div>
+                      
+
+                    
+                    <button>Cadastrar</button>
+                </form>
+            </section>
+            
+        </div>
     </main>
-
-    <form action="/login" method="POST">
-        <div>
-            <label for="usuario">usuario</label>
-            <br>
-            <input type="text" id="usuario" name="usuario">
-        </div>
-        <br>
-        <div>
-            <label for="senha">senha</label>
-            <br>
-            <input type="password" id="senha" name="senha">
-        </div>
-        <br>
-        <a aria-current="page" href="/">Enviar</a>
-    </form>
-
 </body>
 </html>

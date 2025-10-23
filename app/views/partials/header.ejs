@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
     <title><%= titulo %></title>
   </head>
   <body>
@@ -13,11 +13,12 @@
       <div class="container-fluid">
         <a class="navbar-brand" href="/">Ateliê Raphietro</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+          <span aria-hidden="true" style="font-size:1.25rem; color: #fff; line-height:1;">☰</span>
         </button>
     
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">    
+          <ul class="navbar-nav ms-auto">
+            <% if (user) { %>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/">Início</a>
             </li>
@@ -27,6 +28,16 @@
             <li class="nav-item">
               <a class="nav-link" href="/adm">Espaço ADM</a>
             </li>
+            <li class="nav-item">
+              <form action="/logout" method="GET" style="display:inline">
+                <button class="btn btn-sm btn-outline-light ms-2" type="submit">Sair</button>
+              </form>
+            </li>
+            <% } else { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Entrar / Cadastrar</a>
+            </li>
+            <% } %>
           </ul>
         </div>
       </div>

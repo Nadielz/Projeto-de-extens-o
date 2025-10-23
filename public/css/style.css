@@ -4,6 +4,23 @@ body {
 }
 
 .barraNavegacao {
-  background-color: #4A148C !important; /* Um tom de roxo, por exemplo */
+  background-color: #4A148C !important; 
 }
 
+
+.container-forms {
+    display: flex;
+    justify-content: space-around; 
+    align-items: flex-start; 
+    max-width: 900px; 
+    margin: 50px auto; 
+    padding: 20px;
+    gap: 40px;
+}
+
+.form-login, .form-cadastro {
+    flex: 1; 
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
