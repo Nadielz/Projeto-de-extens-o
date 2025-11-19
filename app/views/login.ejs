@@ -11,6 +11,13 @@
 
 <body>
     <main>
+        <% if (typeof error !== 'undefined' && error) { %>
+            <div class="container mt-3">
+                <div class="alert alert-danger d-flex align-items-center" role="alert">
+                    <%= error %>
+                </div>
+            </div>
+        <% } %>
         <div class="container-forms">
             
             <section class="form-login">

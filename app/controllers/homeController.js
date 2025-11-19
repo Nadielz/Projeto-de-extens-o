@@ -7,15 +7,14 @@ module.exports.home = (app, req, res) => {
     
     const db = dbConn();
 
-    homeModel.getClientes(db, (error, result) => {
+    homeModel.getPedidos(db, (error, result) => {
         
         if (error) {
-            console.log("Erro ao buscar clientes:", error);
+            console.log("Erro ao buscar pedidos:", error);
             res.send("Ocorreu um erro ao consultar os dados.");
             return;
         }
-        
-        console.log("Clientes encontrados:", result);
-        res.render('home.ejs', { clientes: result });
+        console.log("Pedidos encontrados:", result);
+        res.render('home.ejs', { pedidos: result });
     });
-};
+}

@@ -14,7 +14,6 @@ module.exports.cadastrar = (app, req, res) => {
     const email = req.body.email || null;
     const sexo = req.body.sexo || null;
     const telefone = req.body.telefone || null;
-    const cargo = req.body.cargo || null;
 
     if (!nome || !senha) {
         return res.status(400).send('Nome (ou email) e senha são obrigatórios');
@@ -28,10 +27,11 @@ module.exports.cadastrar = (app, req, res) => {
       if (s === 'o' || s === 'outro') sexoNormalized = 'Outro';
     }
 
-    loginModel.criarUsuario(db, nome, senha, cargo, email, sexoNormalized, telefone, (error, result) => {
+    loginModel.criarUsuario(db, nome, senha, email, sexoNormalized, telefone, (error, result) => {
         if (error) {
             console.error('Erro ao criar usuário:', error);
-            return res.status(500).send('Erro ao criar usuário');
+            return res.status(500).render('login.ejs', { error: 'Erro ao criar usuário' });
+
         }
 
         console.log('Usuário criado com sucesso:', result);
@@ -57,7 +57,7 @@ module.exports.autenticar = (app, req, res) => {
         }
 
         if (!rows || rows.length === 0) {
-            return res.status(401).send('Usuário ou senha inválidos');
+            return res.status(401).render('login.ejs', { error: 'Usuário ou senha inválidos' });
         }
 
         console.log('Usuário autenticado:', rows[0].Nome);

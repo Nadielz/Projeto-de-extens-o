@@ -53,6 +53,7 @@ app.use(
 routes.home(app);
 routes.login(app);
 routes.servicos(app);
+if (typeof routes.pedidos === 'function') routes.pedidos(app);
 const { adm } = require('./app/controllers/admController');
 app.get('/adm', checkAuth, (req, res) => {
   adm(app, req, res);

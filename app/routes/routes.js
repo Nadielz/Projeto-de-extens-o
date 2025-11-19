@@ -1,3 +1,4 @@
+const { novoPedidoForm } = require('../controllers/pedidosController');
 const { home } = require('../controllers/homeController');
 const { login } = require('../controllers/loginController');
 const { servicos } = require('../controllers/servicosController');
@@ -7,6 +8,15 @@ module.exports = {
         home: (app) => {
         app.get('/', (req, res) => {
             home(app, req, res);
+        });
+    },
+    pedidos: (app) => {
+        const pedidosController = require('../controllers/pedidosController');
+        app.get('/pedidos/novo', (req, res) => {
+            pedidosController.novoPedidoForm(app, req, res);
+        });
+        app.post('/pedidos/novo', (req, res) => {
+            pedidosController.criarPedido(app, req, res);
         });
     },
         login: (app) => {
