@@ -4,12 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Site</title>
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<%- include('partials/header', {titulo: 'Página Home'}) %>
+<!-- <%- include('partials/header', {titulo: 'Página Home'}) %> -->
 <body>
-    <main>
-        <h1>Home Ateliê</h1>
+    <div id = "root">
+        <div class ="App">
+            <div class = "dashboard-container">
+                <header class="dashboard-header">
+                    <div style="width: 83px;"></div>
+                        <img alt="Raphietro Atelier Logo" class="dashboard-logo" src="/image/logo-raphietro-DpL_DJD5.png">
+                    <button class="logout-button">Sair</button>
+                </header>
+                <div class="dashboard-content">
+                    <button class="dashboard-button">Pedidos</button>
+                    <button class="dashboard-button">Clientes</button>
+                    <button class="dashboard-button">Relátórios</button>
+                    <button class="dashboard-button" onclick="window.location.href='/login'">Administração</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- <h1>Home Ateliê</h1>
         
         <hr>
 
@@ -26,8 +42,7 @@
             </ul>
         <% } else { %>
             <p>Nenhum cliente cadastrado no momento.</p>
-        <% } %>
-
-    </main>
+        <% } %> -->
+        </div>
 </body>
 </html>

@@ -22,5 +22,5 @@ routes.servicos(app);
 routes.adm(app);
 
 app.listen(port, function () {
-    console.log('Servidor rodando na porta: ', port);
+    console.log('Servidor rodando na porta: http://localhost:5000');
 })
