@@ -62,5 +62,5 @@ if (typeof routes.loginPost === 'function') routes.loginPost(app);
 if (typeof routes.cadastro === 'function') routes.cadastro(app);
 
 app.listen(port, function () {
-    console.log('Servidor rodando na porta: ', port);
+    console.log('Servidor rodando na porta: http://localhost:5000');
 })

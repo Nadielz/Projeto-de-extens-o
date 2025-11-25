@@ -1,12 +1,9 @@
-body {
+body{
     margin: 0;
-    font-family: sans-serif;
+    font-family: Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
-
-.barraNavegacao {
-  background-color: #4A148C !important; 
-}
-
 
 .container-forms {
     display: flex;
@@ -23,4 +20,109 @@ body {
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
+}
+
+div.App{
+      text-align: center;
+}
+
+.dashboard-header {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 5vh;
+    padding: 0 2vw;
+}
+
+.dashboard-logo {
+    width: 25vmin;
+    max-width: 150px;
+}
+
+@media (max-width: 768px) {
+    .dashboard-logo {
+        width: 20vmin;
+    }
+        .dashboard-container {
+        padding: 1vh;
+    }
+    .dashboard-button {
+        font-size: 1em;
+        padding: 1em 1.2em;
+    }
+}
+
+img {
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}
+
+.logout-button {
+    background-color: #f44336;
+    color: #fff;
+    padding: 1em 1.5em;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .2s;
+    box-shadow: 0 4px 8px #0003;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #700052;
+    padding: 2vh;
+    color: #fff;
+}
+
+.dashboard-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: 80vw;
+    max-width: 300px;
+}
+
+button {
+    appearance: auto;
+    text-rendering: auto;
+    color: buttontext;
+    letter-spacing: normal;
+    word-spacing: normal;
+    line-height: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    cursor: default;
+    box-sizing: border-box;
+    background-color: buttonface;
+    margin: 0em 0em 0em 0em;
+    padding-block: 1px;
+    padding-inline: 6px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonborder;
+    border-image: initial;
+}
+
+.dashboard-button {
+    background-color: #f8ad16;
+    color: #700052;
+    padding: 1.2em 1.5em;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .2s;
+    box-shadow: 0 4px 8px #0003;
 }
