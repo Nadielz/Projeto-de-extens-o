@@ -16,14 +16,41 @@ body{
 }
 
 .form-login, .form-cadastro {
+    display: flex;
+    flex-direction: column;
     flex: 1; 
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
+    margin: 0;
+}
+
+.form-login input, .form-login select, .form-cadastro input, .form-cadastro select {
+    display: flex;
+    flex-direction: column;
+    flex: 1; 
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin: 0;
+}
+
+.label-forms-login {
+    display:block;
+    margin-top: 1em;
+    text-align: left; 
+}
+
+.div-cad-sexo{
+    text-align: left;
+    margin: 0;
+    margin-top: 1em;
+    display:flex;
+    flex-direction: column;
 }
 
 div.App{
-      text-align: center;
+    text-align: center;
 }
 
 .dashboard-header {
@@ -39,19 +66,6 @@ div.App{
 .dashboard-logo {
     width: 25vmin;
     max-width: 150px;
-}
-
-@media (max-width: 768px) {
-    .dashboard-logo {
-        width: 20vmin;
-    }
-        .dashboard-container {
-        padding: 1vh;
-    }
-    .dashboard-button {
-        font-size: 1em;
-        padding: 1em 1.2em;
-    }
 }
 
 img {
@@ -85,6 +99,14 @@ img {
 .dashboard-content {
     display: flex;
     flex-direction: column;
+    gap: 2em;
+    width: 80vw;
+    max-width: 300px;
+}
+
+.dashboard-content-login{
+    display: flex;
+    flex-direction:row;
     gap: 2em;
     width: 80vw;
     max-width: 300px;
@@ -125,4 +147,48 @@ button {
     cursor: pointer;
     transition: transform .2s;
     box-shadow: 0 4px 8px #0003;
+}
+
+.login-button{
+    margin-top: 1em;
+    background-color: #f8ad16;
+    color: #700052;
+    padding: 0.8em 1.2em;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.8em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .2s;
+    box-shadow: 0 4px 8px #0003;
+}
+
+@media (max-width: 768px) {
+    .container-forms {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        max-width: 95%;
+        padding: 10px;
+        margin-top: 20px;
+    }
+
+    .form-login,
+    .form-cadastro {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .dashboard-logo {
+        width: 20vmin;
+    }
+
+    .dashboard-container {
+        padding: 1vh;
+    }
+
+    .dashboard-button {
+        font-size: 1em;
+        padding: 1em 1.2em;
+    }
 }
