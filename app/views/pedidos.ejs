@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div id="root">
+        <div class="App">
+            <div class="dashboard-container">
+                <header class="dashboard-header">
+                    <div style="width: 83px;"></div>
+                    <button class="return-button" onclick="window.location.href='/'"><</button>
+                    <img alt="Raphietro Atelier Logo" class="dashboard-logo" src="/image/logo-raphietro-DpL_DJD5.png">
+                    <button class="logout-button" onclick="window.location.href='/logout'">Sair</button>
+                </header>
+                <div class="dashboard-content">
+                    <h2>Pedidos</h2>
+                    <a href="/pedidos/novo" class="dashboard-button">Novo Pedido</a>
+                    <% if (typeof pedidos !== 'undefined' && pedidos.length > 0) { %>
+                        <div class="pedidos-list">
+                            <% pedidos.forEach(function(pedido) { %>
+                                <div class="cards-pedidos">
+                                    <strong>Costureiro:</strong> <%= pedido.Nome_Costureiro %> <br>
+                                    <strong>Estado:</strong> <%= pedido.Estado %> <br>
+                                    <strong>Descrição:</strong> <%= pedido.Descricao %> <br>
+                                    <strong>Valor:</strong> <%= pedido.Valor_Total %> <br>
+                                    <strong>Data:</strong> <%= pedido.Data_Pedido %> <br>
+                                </div>
+                            <% }); %>
+                        </div>
+                    <% } else { %>
+                        <p>Nenhum pedido cadastrado no momento.</p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

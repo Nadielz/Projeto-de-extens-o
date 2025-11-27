@@ -9,6 +9,7 @@ module.exports = {
         app.get('/', (req, res) => {
             home(app, req, res);
         });
+        
     },
     pedidos: (app) => {
         const pedidosController = require('../controllers/pedidosController');
@@ -18,7 +19,10 @@ module.exports = {
         app.post('/pedidos/novo', (req, res) => {
             pedidosController.criarPedido(app, req, res);
         });
-    },
+        app.get('/pedidos', (req, res) => {
+            pedidosController.getPedidos(app, req, res);
+        });
+   },
         login: (app) => {
         app.get('/login', (req, res) => {
             login(app, req, res);

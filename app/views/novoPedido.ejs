@@ -6,35 +6,46 @@
     <title>Novo Pedido</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
-<%- include('partials/header', {titulo: 'Novo Pedido'}) %>
 <body>
-    <main>
-        <h1>Novo Pedido</h1>
-        <% if (typeof error !== 'undefined' && error) { %>
-            <div class="alert alert-danger"><%= error %></div>
-        <% } %>
-        <form action="/pedidos/novo" method="POST" class="form-novo-pedido">
-            <div>
-                <label for="costureiro">Nome do Costureiro</label>
-                <select id="costureiro" name="costureiro" required>
-                    <% if (usuarios && usuarios.length > 0) { %>
-                        <% usuarios.forEach(function(usuario) { %>
-                            <option value="<%= usuario.User_ID %>"><%= usuario.Nome %></option>
-                        <% }); %>
-                    <% } else { %>
-                        <option value="">Nenhum usuário encontrado</option>
+    <div id="root">
+        <div class="App">
+            <div class="dashboard-container">
+                <header class="dashboard-header">
+                    <div style="width: 83px;"></div>
+                    <img alt="Raphietro Atelier Logo" class="dashboard-logo" src="/image/logo-raphietro-DpL_DJD5.png">
+                    <button class="logout-button" onclick="window.location.href='/logout'">Sair</button>
+                </header>
+                <div class="dashboard-content">
+                    <h2>Novo Pedido</h2>
+                    <% if (typeof error !== 'undefined' && error) { %>
+                        <div class="alert alert-danger"><%= error %></div>
                     <% } %>
-                </select>
-            <div>
-                <label for="descricao">Descrição</label>
-                <textarea id="descricao" name="descricao" required></textarea>
+                    <form action="/pedidos/novo" method="POST" class="form-novo-pedido">
+                        <div>
+                            <label class="label-forms-login" for="costureiro">Nome do Costureiro</label>
+                            <select id="costureiro" name="costureiro" required>
+                                <% if (usuarios && usuarios.length > 0) { %>
+                                    <% usuarios.forEach(function(usuario) { %>
+                                        <option value="<%= usuario.User_ID %>"><%= usuario.Nome %></option>
+                                    <% }); %>
+                                <% } else { %>
+                                    <option value="">Nenhum usuário encontrado</option>
+                                <% } %>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="label-forms-login" for="descricao">Descrição</label>
+                            <textarea id="descricao" name="descricao" required></textarea>
+                        </div>
+                        <div>
+                            <label class="label-forms-login" for="valor">Valor Total</label>
+                            <input type="number" id="valor" name="valor" step="0.01" min="0" required>
+                        </div>
+                        <button type="submit" class="login-button">Salvar Pedido</button>
+                    </form>
+                </div>
             </div>
-            <div>
-                <label for="valor">Valor Total</label>
-                <input type="number" id="valor" name="valor" step="0.01" min="0" required>
-            </div>
-            <button type="submit">Salvar Pedido</button>
-        </form>
-    </main>
+        </div>
+    </div>
 </body>
 </html>

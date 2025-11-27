@@ -62,6 +62,6 @@ module.exports.autenticar = (app, req, res) => {
 
         console.log('Usuário autenticado:', rows[0].Nome);
         req.session.user = { id: rows[0].User_ID, nome: rows[0].Nome };
-    return res.redirect('/adm');
+    return res.redirect('/');
     });
 };

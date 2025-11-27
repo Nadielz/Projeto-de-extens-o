@@ -25,7 +25,8 @@ body{
     margin: 0;
 }
 
-.form-login input, .form-login select, .form-cadastro input, .form-cadastro select {
+.form-login input, .form-login select, .form-cadastro input, .form-cadastro select,
+.form-novo-pedido input, .form-novo-pedido select, .form-novo-pedido textarea {
     display: flex;
     flex-direction: column;
     flex: 1; 
@@ -33,6 +34,9 @@ body{
     border: 1px solid #ccc;
     border-radius: 8px;
     margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
 .label-forms-login {
@@ -86,6 +90,19 @@ img {
     box-shadow: 0 4px 8px #0003;
 }
 
+.return-button {
+    background-color: #f8ad16;
+    color: #700052;
+    padding: 0.8em 1.2em;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .2s;
+    box-shadow: 0 4px 8px #0003;
+}
+
 .dashboard-container {
     display: flex;
     flex-direction: column;
@@ -101,7 +118,28 @@ img {
     flex-direction: column;
     gap: 2em;
     width: 80vw;
-    max-width: 300px;
+    max-width: 600px;
+    padding: 20px;
+}
+
+.form-novo-pedido {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 100%;
+}
+
+.form-novo-pedido div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.pedidos-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5em;
+    width: 100%;
 }
 
 .dashboard-content-login{
@@ -109,7 +147,28 @@ img {
     flex-direction:row;
     gap: 2em;
     width: 80vw;
-    max-width: 300px;
+    max-width: 600px;
+}
+
+.cards-pedidos {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 1.5em;
+    color: #fff;
+    line-height: 1.6;
+}
+
+.alert {
+    padding: 1em;
+    border-radius: 8px;
+    margin-bottom: 1em;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
 }
 
 button {
@@ -190,5 +249,15 @@ button {
     .dashboard-button {
         font-size: 1em;
         padding: 1em 1.2em;
+    }
+
+    .pedidos-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .pedidos-list {
+        grid-template-columns: 1fr;
     }
 }

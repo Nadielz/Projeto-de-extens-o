@@ -30,6 +30,22 @@ module.exports.criarPedido = (app, req, res) => {
                 return res.status(500).render('novoPedido.ejs', { error: 'Erro ao salvar pedido.', usuarios: usuarios || [] });
             });
         }
-        return res.redirect('/');
+        return res.redirect('/pedidos');
     });
 };
+module.exports.getPedidos = (app, req, res) => {
+    console.log('Controller da home executado');
+    
+    const db = dbConn();
+
+    pedidosModel.getPedidos(db, (error, result) => {
+        
+        if (error) {
+            console.log("Erro ao buscar pedidos:", error);
+            res.send("Ocorreu um erro ao consultar os dados.");
+            return;
+        }
+        console.log("Pedidos encontrados:", result);
+        res.render('pedidos.ejs', { pedidos: result });
+    });
+}
