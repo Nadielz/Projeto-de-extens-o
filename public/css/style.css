@@ -142,6 +142,68 @@ img {
     width: 100%;
 }
 
+/* Admin tabs */
+.adm-tabs {
+    display: flex;
+    gap: 1em;
+    margin-bottom: 2em;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.adm-tab-button {
+    padding: 0.8em 1.5em;
+    border: none;
+    background-color: transparent;
+    color: #f8ad16;
+    font-size: 1.1em;
+    font-weight: 700;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+}
+
+.adm-tab-button.active {
+    border-bottom-color: #f8ad16;
+    color: #f8ad16;
+}
+
+.adm-tab-button:hover {
+    color: #fff;
+}
+
+.adm-content-section {
+    display: none;
+}
+
+.adm-content-section.active {
+    display: block;
+}
+
+/* header spacer used in adm.ejs */
+.header-spacer {
+    width: 83px;
+}
+
+/* Clientes header layout (title + novo cliente button) */
+.clientes-header {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    margin-bottom: 1.5em;
+}
+
+/* smaller variant of dashboard button used inline previously */
+.small-dashboard-button {
+    padding: 0.8em 1.2em;
+    font-size: 0.9em;
+    margin: 0;
+}
+
+/* inline form helper (for delete forms) */
+.inline-form {
+    display: inline-block;
+}
+
 .dashboard-content-login{
     display: flex;
     flex-direction:row;
@@ -157,6 +219,31 @@ img {
     padding: 1.5em;
     color: #fff;
     line-height: 1.6;
+    height: 320px; /* fixed height to match clientes cards */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+}
+
+.card-actions {
+    margin-top: auto;
+}
+
+.adm-content-section h3 {
+    text-align: center;
+    margin: 0 0 0.5em 0;
+}
+
+.card-actions a,
+.card-actions button {
+    text-decoration: none;
+    padding: 0.5em 0.8em;
+    font-size: 0.75em;
+    margin-right: 0.5em;
+    margin-bottom: 0.5em;
 }
 
 .alert {
@@ -222,6 +309,21 @@ button {
     box-shadow: 0 4px 8px #0003;
 }
 
+.card-actions a,
+.card-actions button {
+    padding: 0.5em 0.8em;
+    font-size: 0.75em;
+    margin-right: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.card-actions {
+    margin-top: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+}
+
 @media (max-width: 768px) {
     .container-forms {
         flex-direction: column;
@@ -254,10 +356,18 @@ button {
     .pedidos-list {
         grid-template-columns: repeat(2, 1fr);
     }
+    /* slightly reduce card height on tablet-sized screens */
+    .cards-pedidos {
+        height: 300px;
+    }
 }
 
 @media (max-width: 480px) {
     .pedidos-list {
         grid-template-columns: 1fr;
+    }
+    /* allow cards to size naturally on very small screens */
+    .cards-pedidos {
+        height: auto;
     }
 }

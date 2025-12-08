@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Usuário</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div id="root">
+        <div class="App">
+            <div class="dashboard-container">
+                <header class="dashboard-header">
+                    <div style="width: 83px;"></div>
+                    <button class="return-button" onclick="window.location.href='/adm/usuarios'">&lt;</button>
+                    <img alt="Raphietro Atelier Logo" class="dashboard-logo" src="/image/logo-raphietro-DpL_DJD5.png">
+                    <button class="logout-button" onclick="window.location.href='/logout'">Sair</button>
+                </header>
+                <div class="dashboard-content">
+                    <h2>Editar Usuário</h2>
+                    <form action="/adm/usuarios/<%= usuario.User_ID %>/editar" method="POST" class="form-novo-pedido">
+                        <div>
+                            <label class="label-forms-login" for="nome">Nome</label>
+                            <input id="nome" name="nome" value="<%= usuario.Nome %>" required>
+                        </div>
+                        <div>
+                            <label class="label-forms-login" for="email">Email</label>
+                            <input id="email" name="email" value="<%= usuario.Email %>">
+                        </div>
+                        <div>
+                            <label class="label-forms-login" for="sexo">Sexo</label>
+                            <select id="sexo" name="sexo">
+                                <option value="Masculino" <%= usuario.Sexo === 'Masculino' ? 'selected' : '' %>>Masculino</option>
+                                <option value="Feminino" <%= usuario.Sexo === 'Feminino' ? 'selected' : '' %>>Feminino</option>
+                                <option value="Outro" <%= usuario.Sexo === 'Outro' ? 'selected' : '' %>>Outro</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="label-forms-login" for="telefone">Telefone</label>
+                            <input id="telefone" name="telefone" value="<%= usuario.Telefone %>">
+                        </div>
+                        <button type="submit" class="login-button">Salvar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

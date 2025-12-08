@@ -19,6 +19,15 @@ module.exports = {
         app.post('/pedidos/novo', (req, res) => {
             pedidosController.criarPedido(app, req, res);
         });
+        app.get('/pedidos/:id/editar', (req, res) => {
+            pedidosController.editarPedidoForm(app, req, res);
+        });
+        app.post('/pedidos/:id/editar', (req, res) => {
+            pedidosController.atualizarPedido(app, req, res);
+        });
+        app.post('/pedidos/:id/delete', (req, res) => {
+            pedidosController.deletarPedido(app, req, res);
+        });
         app.get('/pedidos', (req, res) => {
             pedidosController.getPedidos(app, req, res);
         });
@@ -44,10 +53,47 @@ module.exports = {
         });
     },        
         adm: (app) => {
+        const admController = require('../controllers/admController');
         app.get('/adm', (req, res) => {
             adm(app, req, res);
         });
+        app.get('/adm/usuarios/:id/editar', (req, res) => {
+            admController.editarUsuarioForm(app, req, res);
+        });
+        app.post('/adm/usuarios/:id/editar', (req, res) => {
+            admController.atualizarUsuario(app, req, res);
+        });
+        app.post('/adm/usuarios/:id/delete', (req, res) => {
+            admController.deletarUsuario(app, req, res);
+        });
+
+        app.get('/adm/clientes/novo', (req, res) => {
+            admController.novoClienteForm(app, req, res);
+        });
+        app.post('/adm/clientes/novo', (req, res) => {
+            admController.criarCliente(app, req, res);
+        });
+        app.get('/adm/clientes/:id/editar', (req, res) => {
+            admController.editarClienteForm(app, req, res);
+        });
+        app.post('/adm/clientes/:id/editar', (req, res) => {
+            admController.atualizarCliente(app, req, res);
+        });
+        app.post('/adm/clientes/:id/delete', (req, res) => {
+            admController.deletarCliente(app, req, res);
+        });
+
+        app.get('/adm/pedidos/:id/editar', (req, res) => {
+            admController.editarPedidoFromAdm(app, req, res);
+        });
+        app.post('/adm/pedidos/:id/editar', (req, res) => {
+            admController.atualizarPedidoFromAdm(app, req, res);
+        });
+        app.post('/adm/pedidos/:id/delete', (req, res) => {
+            admController.deletarPedidoAdm(app, req, res);
+        });
     },
+
         cadastro: (app) => {
         app.post('/cadastro', (req, res) => {
             const loginController = require('../controllers/loginController');

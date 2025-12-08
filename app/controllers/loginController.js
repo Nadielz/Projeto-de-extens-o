@@ -31,11 +31,14 @@ module.exports.cadastrar = (app, req, res) => {
         if (error) {
             console.error('Erro ao criar usuário:', error);
             return res.status(500).render('login.ejs', { error: 'Erro ao criar usuário' });
-
         }
 
         console.log('Usuário criado com sucesso:', result);
-        return res.redirect('/login');
+        // Após cadastro bem-sucedido, autentica o usuário automaticamente
+        // Preenche os campos esperados pela função autenticar
+        req.body.usuario = nome || email;
+        req.body.senha = senha;
+        return module.exports.autenticar(app, req, res);
     });
 };
 

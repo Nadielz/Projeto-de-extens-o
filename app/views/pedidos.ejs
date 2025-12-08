@@ -18,16 +18,33 @@
                 </header>
                 <div class="dashboard-content">
                     <h2>Pedidos</h2>
+                    <% function formatDate(dt) {
+                        if (!dt) return '';
+                        const d = new Date(dt);
+                        if (isNaN(d.getTime())) return String(dt);
+                        const dd = String(d.getDate()).padStart(2, '0');
+                        const mm = String(d.getMonth() + 1).padStart(2, '0');
+                        const yy = String(d.getFullYear()).slice(-2);
+                        const hh = String(d.getHours()).padStart(2, '0');
+                        const min = String(d.getMinutes()).padStart(2, '0');
+                        return dd + '/' + mm + '/' + yy + ' ' + hh + ':' + min;
+                    } %>
                     <a href="/pedidos/novo" class="dashboard-button">Novo Pedido</a>
                     <% if (typeof pedidos !== 'undefined' && pedidos.length > 0) { %>
                         <div class="pedidos-list">
                             <% pedidos.forEach(function(pedido) { %>
                                 <div class="cards-pedidos">
+                                    <strong>Descrição:</strong> <%= pedido.Descricao %> <br>
                                     <strong>Costureiro:</strong> <%= pedido.Nome_Costureiro %> <br>
                                     <strong>Estado:</strong> <%= pedido.Estado %> <br>
-                                    <strong>Descrição:</strong> <%= pedido.Descricao %> <br>
                                     <strong>Valor:</strong> <%= pedido.Valor_Total %> <br>
-                                    <strong>Data:</strong> <%= pedido.Data_Pedido %> <br>
+                                    <strong>Data:</strong> <%= formatDate(pedido.Data_Pedido) %> <br>
+                                    <div class="card-actions">
+                                        <a class="dashboard-button" href="/pedidos/<%= pedido.Pedido_ID %>/editar">Editar</a>
+                                        <form action="/pedidos/<%= pedido.Pedido_ID %>/delete" method="POST" style="display:inline">
+                                            <button type="submit" class="return-button" onclick="return confirm('Confirma exclusão deste pedido?');">Excluir</button>
+                                        </form>
+                                    </div>
                                 </div>
                             <% }); %>
                         </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Novo Pedido</title>
+    <title>Editar Pedido</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -17,17 +17,17 @@
                     <button class="logout-button" onclick="window.location.href='/logout'">Sair</button>
                 </header>
                 <div class="dashboard-content">
-                    <h2>Novo Pedido</h2>
+                    <h2>Editar Pedido</h2>
                     <% if (typeof error !== 'undefined' && error) { %>
                         <div class="alert alert-danger"><%= error %></div>
                     <% } %>
-                    <form action="/pedidos/novo" method="POST" class="form-novo-pedido">
+                    <form action="/pedidos/<%= pedido.Pedido_ID %>/editar" method="POST" class="form-novo-pedido">
                         <div>
                             <label class="label-forms-login" for="costureiro">Nome do Costureiro</label>
                             <select id="costureiro" name="costureiro" required>
                                 <% if (usuarios && usuarios.length > 0) { %>
                                     <% usuarios.forEach(function(usuario) { %>
-                                        <option value="<%= usuario.User_ID %>"><%= usuario.Nome %></option>
+                                        <option value="<%= usuario.User_ID %>" <%= pedido.User_ID == usuario.User_ID ? 'selected' : '' %>><%= usuario.Nome %></option>
                                     <% }); %>
                                 <% } else { %>
                                     <option value="">Nenhum usuário encontrado</option>
@@ -36,13 +36,23 @@
                         </div>
                         <div>
                             <label class="label-forms-login" for="descricao">Descrição</label>
-                            <textarea id="descricao" name="descricao" required></textarea>
+                            <textarea id="descricao" name="descricao" required><%= pedido.Descricao %></textarea>
                         </div>
                         <div>
                             <label class="label-forms-login" for="valor">Valor Total</label>
-                            <input type="number" id="valor" name="valor" step="0.01" min="0" required>
+                            <input type="number" id="valor" name="valor" step="0.01" min="0" required value="<%= pedido.Valor_Total %>">
                         </div>
-                        <button type="submit" class="login-button">Salvar Pedido</button>
+                        <div>
+                            <label class="label-forms-login" for="estado">Estado</label>
+                            <select id="estado" name="estado">
+                                <option value="Pendente" <%= pedido.Estado === 'Pendente' ? 'selected' : '' %>>Pendente</option>
+                                <option value="Em andamento" <%= pedido.Estado === 'Em andamento' ? 'selected' : '' %>>Em andamento</option>
+                                <option value="Pronto para retirada" <%= pedido.Estado === 'Pronto para retirada' ? 'selected' : '' %>>Pronto para retirada</option>
+                                <option value="Entregue" <%= pedido.Estado === 'Entregue' ? 'selected' : '' %>>Entregue</option>
+                                <option value="Cancelado" <%= pedido.Estado === 'Cancelado' ? 'selected' : '' %>>Cancelado</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="login-button">Atualizar Pedido</button>
                     </form>
                 </div>
             </div>

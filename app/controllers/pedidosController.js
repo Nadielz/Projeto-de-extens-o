@@ -49,3 +49,73 @@ module.exports.getPedidos = (app, req, res) => {
         res.render('pedidos.ejs', { pedidos: result });
     });
 }
+
+module.exports.editarPedidoForm = (app, req, res) => {
+    if (!req.session || !req.session.user) {
+        return res.redirect('/login');
+    }
+    const pedidoId = req.params.id;
+    const db = dbConn();
+    pedidosModel.getPedidoById(db, pedidoId, (err, rows) => {
+        if (err) {
+            console.error('Erro ao buscar pedido:', err);
+            return res.status(500).send('Erro ao buscar pedido');
+        }
+        if (!rows || rows.length === 0) {
+            return res.status(404).send('Pedido não encontrado');
+        }
+        const pedido = rows[0];
+        // buscar usuários para popular select
+        pedidosModel.getUsuarios(db, (err2, usuarios) => {
+            if (err2) {
+                console.error('Erro ao buscar usuários:', err2);
+                usuarios = [];
+            }
+            res.render('editarPedido.ejs', { pedido, usuarios });
+        });
+    });
+};
+
+module.exports.atualizarPedido = (app, req, res) => {
+    if (!req.session || !req.session.user) {
+        return res.redirect('/login');
+    }
+    const pedidoId = req.params.id;
+    const db = dbConn();
+    const { costureiro, descricao, valor, estado } = req.body;
+    if (!costureiro || !descricao || !valor) {
+        return pedidosModel.getPedidoById(db, pedidoId, (err, rows) => {
+            const pedido = rows && rows[0];
+            return pedidosModel.getUsuarios(db, (err2, usuarios) => {
+                return res.status(400).render('editarPedido.ejs', { error: 'Preencha todos os campos.', pedido, usuarios: usuarios || [] });
+            });
+        });
+    }
+    pedidosModel.atualizarPedido(db, pedidoId, costureiro, descricao, valor, estado || 'Pendente', (err, result) => {
+        if (err) {
+            console.error('Erro ao atualizar pedido:', err);
+            return pedidosModel.getPedidoById(db, pedidoId, (err2, rows) => {
+                const pedido = rows && rows[0];
+                return pedidosModel.getUsuarios(db, (err3, usuarios) => {
+                    return res.status(500).render('editarPedido.ejs', { error: 'Erro ao atualizar pedido.', pedido, usuarios: usuarios || [] });
+                });
+            });
+        }
+        return res.redirect('/pedidos');
+    });
+};
+
+module.exports.deletarPedido = (app, req, res) => {
+    if (!req.session || !req.session.user) {
+        return res.redirect('/login');
+    }
+    const pedidoId = req.params.id;
+    const db = dbConn();
+    pedidosModel.deletarPedido(db, pedidoId, (err, result) => {
+        if (err) {
+            console.error('Erro ao deletar pedido:', err);
+            return res.status(500).send('Erro ao deletar pedido');
+        }
+        return res.redirect('/pedidos');
+    });
+};

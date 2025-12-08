@@ -26,4 +26,49 @@ getPedidos: (db, callback) => {
     `;
     db.query(sql, callback);
 }
+,
+    getPedidoById: (db, pedidoId, callback) => {
+        const sql = `
+            SELECT P.*, U.Nome AS Nome_Costureiro
+            FROM Pedidos P
+            INNER JOIN Usuarios U ON P.User_ID = U.User_ID
+            WHERE P.Pedido_ID = ?
+        `;
+        db.query(sql, [pedidoId], callback);
+    },
+
+    atualizarPedido: (db, pedidoId, userId, descricao, valor, estado, callback) => {
+        const sql = `UPDATE Pedidos SET User_ID = ?, Descricao = ?, Valor_Total = ?, Estado = ? WHERE Pedido_ID = ?`;
+        db.query(sql, [userId, descricao, valor, estado, pedidoId], callback);
+    },
+
+    deletarPedido: (db, pedidoId, callback) => {
+        const sql = `DELETE FROM Pedidos WHERE Pedido_ID = ?`;
+        db.query(sql, [pedidoId], callback);
+    },
+
+    getPedidosConcluidos: (db, callback) => {
+        const sql = `
+            SELECT P.*, U.Nome AS Nome_Costureiro
+            FROM Pedidos P
+            INNER JOIN Usuarios U ON P.User_ID = U.User_ID
+            WHERE P.Estado = 'Entregue'
+        `;
+        db.query(sql, callback);
+    },
+
+    getClienteById: (db, clienteId, callback) => {
+        const sql = 'SELECT * FROM Clientes WHERE Cliente_ID = ? LIMIT 1';
+        db.query(sql, [clienteId], callback);
+    },
+
+    atualizarCliente: (db, clienteId, nome, endereco, email, sexo, telefone, callback) => {
+        const sql = 'UPDATE Clientes SET Nome = ?, Endereco = ?, Email = ?, Sexo = ?, Telefone = ? WHERE Cliente_ID = ?';
+        db.query(sql, [nome, endereco, email, sexo, telefone, clienteId], callback);
+    },
+
+    deletarCliente: (db, clienteId, callback) => {
+        const sql = 'DELETE FROM Clientes WHERE Cliente_ID = ?';
+        db.query(sql, [clienteId], callback);
+    }
 };

@@ -1,2 +1,119 @@
- k    <%- include('partials/header', {titulo: 'Página ADM'}) %>
-    <h1>teste adm</h1>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração</title>
+    <link rel="stylesheet" href="/css/style.css">
+    
+</head>
+<body>
+    <div id="root">
+        <div class="App">
+            <div class="dashboard-container">
+                <header class="dashboard-header">
+                    <div class="header-spacer"></div>
+                    <button class="return-button" onclick="window.location.href='/'">&lt;</button>
+                    <img alt="Raphietro Atelier Logo" class="dashboard-logo" src="/image/logo-raphietro-DpL_DJD5.png">
+                    <button class="logout-button" onclick="window.location.href='/logout'">Sair</button>
+                </header>
+                <div class="dashboard-content">
+                    <h2>Administração</h2>
+                    
+                    <div class="adm-tabs">
+                        <button class="adm-tab-button active" onclick="showTab('usuarios')">Usuários</button>
+                        <button class="adm-tab-button" onclick="showTab('clientes')">Clientes</button>
+                        <button class="adm-tab-button" onclick="showTab('pedidos')">Pedidos Concluídos</button>
+                    </div>
+
+                    <div id="usuarios" class="adm-content-section active">
+                        <h3>Usuários</h3>
+                        <% if (usuarios && usuarios.length > 0) { %>
+                            <div class="pedidos-list">
+                                <% usuarios.forEach(function(u) { %>
+                                    <div class="cards-pedidos">
+                                        <strong>Nome:</strong> <%= u.Nome %> <br>
+                                        <strong>Email:</strong> <%= u.Email %> <br>
+                                        <strong>Telefone:</strong> <%= u.Telefone %> <br>
+                                        <div class="card-actions">
+                                            <a class="dashboard-button" href="/adm/usuarios/<%= u.User_ID %>/editar">Editar</a>
+                                            <form action="/adm/usuarios/<%= u.User_ID %>/delete" method="POST" class="inline-form">
+                                                <button type="submit" class="return-button" onclick="return confirm('Confirma exclusão deste usuário?');">Excluir</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            </div>
+                        <% } else { %>
+                            <p>Nenhum usuário cadastrado.</p>
+                        <% } %>
+                    </div>
+
+                    <div id="clientes" class="adm-content-section">
+                        <div class="clientes-header">
+                            <h3>Clientes</h3>
+                            <a class="dashboard-button small-dashboard-button" href="/adm/clientes/novo">Novo Cliente</a>
+                        </div>
+                        <% if (clientes && clientes.length > 0) { %>
+                            <div class="pedidos-list">
+                                <% clientes.forEach(function(c) { %>
+                                    <div class="cards-pedidos">
+                                        <strong>Nome:</strong> <%= c.Nome %> <br>
+                                        <strong>Email:</strong> <%= c.Email %> <br>
+                                        <strong>Endereço:</strong> <%= c.Endereco %> <br>
+                                        <div class="card-actions">
+                                            <a class="dashboard-button" href="/adm/clientes/<%= c.Cliente_ID %>/editar">Editar</a>
+                                            <form action="/adm/clientes/<%= c.Cliente_ID %>/delete" method="POST" class="inline-form">
+                                                <button type="submit" class="return-button" onclick="return confirm('Confirma exclusão deste cliente?');">Excluir</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            </div>
+                        <% } else { %>
+                            <p>Nenhum cliente cadastrado.</p>
+                        <% } %>
+                    </div>
+
+                    <div id="pedidos" class="adm-content-section">
+                        <h3>Pedidos Concluídos</h3>
+                        <% if (pedidos && pedidos.length > 0) { %>
+                            <div class="pedidos-list">
+                                <% pedidos.forEach(function(pedido) { %>
+                                    <div class="cards-pedidos">
+                                        <strong>Costureiro:</strong> <%= pedido.Nome_Costureiro %> <br>
+                                        <strong>Descrição:</strong> <%= pedido.Descricao %> <br>
+                                        <strong>Valor:</strong> <%= pedido.Valor_Total %> <br>
+                                        <strong>Data:</strong> <%= new Date(pedido.Data_Pedido).toLocaleString() %> <br>
+                                        <div class="card-actions">
+                                            <a class="dashboard-button" href="/adm/pedidos/<%= pedido.Pedido_ID %>/editar">Editar</a>
+                                            <form action="/adm/pedidos/<%= pedido.Pedido_ID %>/delete" method="POST" class="inline-form">
+                                                <button type="submit" class="return-button" onclick="return confirm('Confirma exclusão deste pedido?');">Excluir</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            </div>
+                        <% } else { %>
+                            <p>Nenhum pedido concluído.</p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            const sections = document.querySelectorAll('.adm-content-section');
+            sections.forEach(s => s.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.adm-tab-button');
+            buttons.forEach(b => b.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

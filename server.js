@@ -54,10 +54,7 @@ routes.home(app);
 routes.login(app);
 routes.servicos(app);
 if (typeof routes.pedidos === 'function') routes.pedidos(app);
-const { adm } = require('./app/controllers/admController');
-app.get('/adm', checkAuth, (req, res) => {
-  adm(app, req, res);
-});
+if (typeof routes.adm === 'function') routes.adm(app);
 if (typeof routes.loginPost === 'function') routes.loginPost(app);
 if (typeof routes.cadastro === 'function') routes.cadastro(app);
 
