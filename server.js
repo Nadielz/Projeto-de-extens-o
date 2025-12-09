@@ -2,8 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const routes = require('./app/routes/routes.js');
-const db = require('./config/db.js');
-
+const db = require('./config/db.js'); // agora aponta para o arquivo certo
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -43,6 +42,7 @@ app.get('/logout', (req, res) => {
 
 app.use("/bootstrap", express.static(path.join(__dirname, "node_modules/bootstrap/dist")));
 
+// Rotas
 routes.home(app);
 routes.login(app);
 routes.servicos(app);
