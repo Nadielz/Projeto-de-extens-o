@@ -8,7 +8,13 @@ const mysql = require('mysql2');
 const app = express();
 const port = process.env.PORT || 5000;
 
-const db = mysql.createPool(process.env.MYSQL_URL);
+const db = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT || 3306
+});
 
 db.getConnection((err, connection) => {
   if (err) {
