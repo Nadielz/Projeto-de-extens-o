@@ -5,26 +5,13 @@ const routes = require('./app/routes/routes.js');
 const mysql = require('mysql2');
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT;
 
-const db = mysql.createPool({
-  host: process.env.MYSQLHOST || 'mysql.railway.internal',
-  user: process.env.MYSQLUSER || 'root',
-  password: process.env.MYSQLPASSWORD || 'rjsEdPfyBOxQShDLWepsENaQnQeQaJeo',
-  database: process.env.MYSQLDATABASE || 'railway',
-  port: Number(process.env.MYSQLPORT) || 3306,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
+const db = mysql.createPool(process.env.MYSQL_URL);
 
 db.getConnection((err, connection) => {
-  if (err) {
-    console.error("Erro ao conectar no MySQL:", err);
-  } else {
-    console.log("Conectado ao MySQL!");
-    connection.release();
-  }
+  if (err) console.error("Erro ao conectar no MySQL:", err);
+  else connection.release();
 });
 
 app.set("view engine", "ejs");
@@ -43,7 +30,7 @@ app.use((req, res, next) => {
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'chave_temporaria',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }
@@ -56,11 +43,8 @@ app.use((req, res, next) => {
 });
 
 app.get('/logout', (req, res) => {
-  if (req.session) {
-    req.session.destroy(() => res.redirect('/login'));
-  } else {
-    res.redirect('/login');
-  }
+  if (req.session) req.session.destroy(() => res.redirect('/login'));
+  else res.redirect('/login');
 });
 
 app.use("/bootstrap", express.static(path.join(__dirname, "node_modules/bootstrap/dist")));
@@ -73,6 +57,9 @@ if (typeof routes.adm === 'function') routes.adm(app);
 if (typeof routes.loginPost === 'function') routes.loginPost(app);
 if (typeof routes.cadastro === 'function') routes.cadastro(app);
 
-app.listen(port, '0.0.0.0', () => console.log(`Servidor rodando na porta: http://localhost:${port}`));
+app.get('/', (req, res) => res.send('Servidor funcionando!'));
+
+app.listen(port, '0.0.0.0');
 
 module.exports = { app, db };
+
