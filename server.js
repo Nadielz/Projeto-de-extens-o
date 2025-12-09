@@ -2,7 +2,8 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const routes = require('./app/routes/routes.js');
-const db = require('./db.js');
+const db = require('./config/db.js');
+
 
 const app = express();
 const port = process.env.PORT || 8080;
