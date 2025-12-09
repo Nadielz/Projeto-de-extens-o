@@ -8,10 +8,20 @@ const mysql = require('mysql2');
 const app = express();
 const port = process.env.PORT || 5000;
 
-const db = mysql.createPool('mysql://root:ogHmibWhGMBjMZftogxyGvrlgnEudWqe@mysql.railway.internal:3306/railway');
+const db = mysql.createPool(process.env.MYSQL_URL);
+
+db.getConnection((err, connection) => {
+  if (err) {
+    console.error("Erro ao conectar no MySQL:", err);
+  } else {
+    console.log("Conectado ao MySQL!");
+    connection.release();
+  }
+});
 
 app.set("view engine", "ejs");
 app.set('views', './app/views');
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
