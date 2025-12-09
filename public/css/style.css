@@ -3,6 +3,8 @@ body{
     font-family: Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: #700052;
+    min-height: 100vh;
 }
 
 .container-forms {
@@ -135,6 +137,11 @@ img {
     gap: 0.5em;
 }
 
+.form-novo-pedido button {
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .pedidos-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -219,7 +226,7 @@ img {
     padding: 1.5em;
     color: #fff;
     line-height: 1.6;
-    height: 320px; /* fixed height to match clientes cards */
+    height: 460px; /* increased to fit action buttons */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -244,6 +251,9 @@ img {
     font-size: 0.75em;
     margin-right: 0.5em;
     margin-bottom: 0.5em;
+    flex: 1;
+    text-align: center;
+    min-width: 70px;
 }
 
 .alert {
@@ -356,9 +366,9 @@ button {
     .pedidos-list {
         grid-template-columns: repeat(2, 1fr);
     }
-    /* slightly reduce card height on tablet-sized screens */
+    /* increase card height on tablet-sized screens */
     .cards-pedidos {
-        height: 300px;
+        height: 440px;
     }
 }
 

@@ -35,13 +35,14 @@
                             <% pedidos.forEach(function(pedido) { %>
                                 <div class="cards-pedidos">
                                     <strong>Descrição:</strong> <%= pedido.Descricao %> <br>
+                                    <strong>Cliente:</strong> <%= pedido.Nome_Cliente || '—' %> <br>
                                     <strong>Costureiro:</strong> <%= pedido.Nome_Costureiro %> <br>
                                     <strong>Estado:</strong> <%= pedido.Estado %> <br>
                                     <strong>Valor:</strong> <%= pedido.Valor_Total %> <br>
                                     <strong>Data:</strong> <%= formatDate(pedido.Data_Pedido) %> <br>
                                     <div class="card-actions">
                                         <a class="dashboard-button" href="/pedidos/<%= pedido.Pedido_ID %>/editar">Editar</a>
-                                        <form action="/pedidos/<%= pedido.Pedido_ID %>/delete" method="POST" style="display:inline">
+                                        <form action="/pedidos/<%= pedido.Pedido_ID %>/delete" method="POST" class="inline-form">
                                             <button type="submit" class="return-button" onclick="return confirm('Confirma exclusão deste pedido?');">Excluir</button>
                                         </form>
                                     </div>

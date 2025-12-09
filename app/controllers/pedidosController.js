@@ -6,9 +6,15 @@ module.exports.novoPedidoForm = (app, req, res) => {
     pedidosModel.getUsuarios(db, (err, usuarios) => {
         if (err) {
             console.error('Erro ao buscar usuários:', err);
-            return res.status(500).render('novoPedido.ejs', { error: 'Erro ao buscar usuários.', usuarios: [] });
+            return res.status(500).render('novoPedido.ejs', { error: 'Erro ao buscar usuários.', usuarios: [], clientes: [] });
         }
-        res.render('novoPedido.ejs', { usuarios });
+        pedidosModel.getClientes(db, (err2, clientes) => {
+            if (err2) {
+                console.error('Erro ao buscar clientes:', err2);
+                clientes = [];
+            }
+            res.render('novoPedido.ejs', { usuarios, clientes });
+        });
     });
 };
 
@@ -17,17 +23,21 @@ module.exports.criarPedido = (app, req, res) => {
         return res.redirect('/login');
     }
     const db = dbConn();
-    const { costureiro, descricao, valor } = req.body;
-    if (!costureiro || !descricao || !valor) {
+    const { costureiro, cliente, descricao, valor } = req.body;
+    if (!costureiro || !cliente || !descricao || !valor) {
         return pedidosModel.getUsuarios(db, (err, usuarios) => {
-            return res.status(400).render('novoPedido.ejs', { error: 'Preencha todos os campos.', usuarios: usuarios || [] });
+            return pedidosModel.getClientes(db, (err2, clientes) => {
+                return res.status(400).render('novoPedido.ejs', { error: 'Preencha todos os campos.', usuarios: usuarios || [], clientes: clientes || [] });
+            });
         });
     }
-    pedidosModel.criarPedido(db, costureiro, descricao, valor, (err, result) => {
+    pedidosModel.criarPedido(db, costureiro, cliente, descricao, valor, (err, result) => {
         if (err) {
             console.error('Erro ao salvar pedido:', err);
             return pedidosModel.getUsuarios(db, (err2, usuarios) => {
-                return res.status(500).render('novoPedido.ejs', { error: 'Erro ao salvar pedido.', usuarios: usuarios || [] });
+                return pedidosModel.getClientes(db, (err3, clientes) => {
+                    return res.status(500).render('novoPedido.ejs', { error: 'Erro ao salvar pedido.', usuarios: usuarios || [], clientes: clientes || [] });
+                });
             });
         }
         return res.redirect('/pedidos');
@@ -65,13 +75,19 @@ module.exports.editarPedidoForm = (app, req, res) => {
             return res.status(404).send('Pedido não encontrado');
         }
         const pedido = rows[0];
-        // buscar usuários para popular select
+        // buscar usuários e clientes para popular selects
         pedidosModel.getUsuarios(db, (err2, usuarios) => {
             if (err2) {
                 console.error('Erro ao buscar usuários:', err2);
                 usuarios = [];
             }
-            res.render('editarPedido.ejs', { pedido, usuarios });
+            pedidosModel.getClientes(db, (err3, clientes) => {
+                if (err3) {
+                    console.error('Erro ao buscar clientes:', err3);
+                    clientes = [];
+                }
+                res.render('editarPedido.ejs', { pedido, usuarios, clientes });
+            });
         });
     });
 };
@@ -82,22 +98,26 @@ module.exports.atualizarPedido = (app, req, res) => {
     }
     const pedidoId = req.params.id;
     const db = dbConn();
-    const { costureiro, descricao, valor, estado } = req.body;
-    if (!costureiro || !descricao || !valor) {
+    const { costureiro, cliente, descricao, valor, estado } = req.body;
+    if (!costureiro || !cliente || !descricao || !valor) {
         return pedidosModel.getPedidoById(db, pedidoId, (err, rows) => {
             const pedido = rows && rows[0];
             return pedidosModel.getUsuarios(db, (err2, usuarios) => {
-                return res.status(400).render('editarPedido.ejs', { error: 'Preencha todos os campos.', pedido, usuarios: usuarios || [] });
+                return pedidosModel.getClientes(db, (err3, clientes) => {
+                    return res.status(400).render('editarPedido.ejs', { error: 'Preencha todos os campos.', pedido, usuarios: usuarios || [], clientes: clientes || [] });
+                });
             });
         });
     }
-    pedidosModel.atualizarPedido(db, pedidoId, costureiro, descricao, valor, estado || 'Pendente', (err, result) => {
+    pedidosModel.atualizarPedido(db, pedidoId, costureiro, cliente, descricao, valor, estado || 'Pendente', (err, result) => {
         if (err) {
             console.error('Erro ao atualizar pedido:', err);
             return pedidosModel.getPedidoById(db, pedidoId, (err2, rows) => {
                 const pedido = rows && rows[0];
                 return pedidosModel.getUsuarios(db, (err3, usuarios) => {
-                    return res.status(500).render('editarPedido.ejs', { error: 'Erro ao atualizar pedido.', pedido, usuarios: usuarios || [] });
+                    return pedidosModel.getClientes(db, (err4, clientes) => {
+                        return res.status(500).render('editarPedido.ejs', { error: 'Erro ao atualizar pedido.', pedido, usuarios: usuarios || [], clientes: clientes || [] });
+                    });
                 });
             });
         }

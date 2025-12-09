@@ -35,6 +35,18 @@
                             </select>
                         </div>
                         <div>
+                            <label class="label-forms-login" for="cliente">Cliente</label>
+                            <select id="cliente" name="cliente" required>
+                                <% if (clientes && clientes.length > 0) { %>
+                                    <% clientes.forEach(function(cliente) { %>
+                                        <option value="<%= cliente.Cliente_ID %>"><%= cliente.Nome %></option>
+                                    <% }); %>
+                                <% } else { %>
+                                    <option value="">Nenhum cliente encontrado</option>
+                                <% } %>
+                            </select>
+                        </div>
+                        <div>
                             <label class="label-forms-login" for="descricao">Descrição</label>
                             <textarea id="descricao" name="descricao" required></textarea>
                         </div>

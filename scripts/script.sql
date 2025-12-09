@@ -30,12 +30,13 @@ CREATE TABLE Servicos (
 CREATE TABLE Pedidos (
     Pedido_ID INT PRIMARY KEY AUTO_INCREMENT,
     User_ID INT,
+    Cliente_ID INT,
     Estado ENUM('Pendente', 'Em andamento', 'Pronto para retirada', 'Entregue' , 'Cancelado') NOT NULL DEFAULT 'Pendente',
     Descricao varchar(255),
     Valor_Total DECIMAL(10, 2),
     Data_Pedido DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    FOREIGN KEY (User_ID) REFERENCES Usuarios(User_ID)
+    FOREIGN KEY (User_ID) REFERENCES Usuarios(User_ID),
+    FOREIGN KEY (Cliente_ID) REFERENCES Clientes(Cliente_ID)
 );
 
 

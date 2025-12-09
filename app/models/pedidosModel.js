@@ -1,8 +1,8 @@
 module.exports = {
-  criarPedido: (db, userId, descricao, valor, callback) => {
-    const sql = 'INSERT INTO Pedidos (User_ID, Descricao, Valor_Total) VALUES (?, ?, ?)';
-    db.query(sql, [userId, descricao, valor], callback);
-  },
+    criarPedido: (db, userId, clienteId, descricao, valor, callback) => {
+        const sql = 'INSERT INTO Pedidos (User_ID, Cliente_ID, Descricao, Valor_Total) VALUES (?, ?, ?, ?)';
+        db.query(sql, [userId, clienteId, descricao, valor], callback);
+    },
     getUsuarios: (db, callback) => {
         console.log("Model: getUsuarios");
         const sql = 'SELECT * FROM Usuarios';
@@ -17,29 +17,33 @@ getPedidos: (db, callback) => {
     console.log("Model: getPedidos");
     const sql = `
         SELECT
-            P.*, -- Seleciona todas as colunas da tabela Pedidos
-            U.Nome AS Nome_Costureiro -- Seleciona a coluna Nome da tabela Usuarios e a renomeia
+            P.*,
+            U.Nome AS Nome_Costureiro,
+            C.Nome AS Nome_Cliente
         FROM
             Pedidos P
         INNER JOIN
             Usuarios U ON P.User_ID = U.User_ID
+        LEFT JOIN
+            Clientes C ON P.Cliente_ID = C.Cliente_ID
     `;
     db.query(sql, callback);
 }
 ,
     getPedidoById: (db, pedidoId, callback) => {
         const sql = `
-            SELECT P.*, U.Nome AS Nome_Costureiro
+            SELECT P.*, U.Nome AS Nome_Costureiro, C.Nome AS Nome_Cliente
             FROM Pedidos P
             INNER JOIN Usuarios U ON P.User_ID = U.User_ID
+            LEFT JOIN Clientes C ON P.Cliente_ID = C.Cliente_ID
             WHERE P.Pedido_ID = ?
         `;
         db.query(sql, [pedidoId], callback);
     },
 
-    atualizarPedido: (db, pedidoId, userId, descricao, valor, estado, callback) => {
-        const sql = `UPDATE Pedidos SET User_ID = ?, Descricao = ?, Valor_Total = ?, Estado = ? WHERE Pedido_ID = ?`;
-        db.query(sql, [userId, descricao, valor, estado, pedidoId], callback);
+    atualizarPedido: (db, pedidoId, userId, clienteId, descricao, valor, estado, callback) => {
+        const sql = `UPDATE Pedidos SET User_ID = ?, Cliente_ID = ?, Descricao = ?, Valor_Total = ?, Estado = ? WHERE Pedido_ID = ?`;
+        db.query(sql, [userId, clienteId, descricao, valor, estado, pedidoId], callback);
     },
 
     deletarPedido: (db, pedidoId, callback) => {
@@ -49,9 +53,10 @@ getPedidos: (db, callback) => {
 
     getPedidosConcluidos: (db, callback) => {
         const sql = `
-            SELECT P.*, U.Nome AS Nome_Costureiro
+            SELECT P.*, U.Nome AS Nome_Costureiro, C.Nome AS Nome_Cliente
             FROM Pedidos P
             INNER JOIN Usuarios U ON P.User_ID = U.User_ID
+            LEFT JOIN Clientes C ON P.Cliente_ID = C.Cliente_ID
             WHERE P.Estado = 'Entregue'
         `;
         db.query(sql, callback);
