@@ -11,9 +11,8 @@ const db = mysql.createPool({
 });
 
 const sql = fs.readFileSync('./scripts/script.sql', 'utf8');
-const cleanedSql = sql.replace(/CREATE DATABASE.*;/gi, '').replace(/USE.*;/gi, '');
 
-db.query(cleanedSql, (err, results) => {
+db.query(sql, (err, results) => {
   if (err) console.error('Erro ao importar banco:', err);
   else console.log('Banco importado com sucesso!');
   process.exit();
