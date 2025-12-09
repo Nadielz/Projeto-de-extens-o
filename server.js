@@ -5,9 +5,18 @@ const routes = require('./app/routes/routes.js');
 const mysql = require('mysql2');
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 8080;
 
-const db = mysql.createPool(process.env.MYSQL_URL);
+const db = mysql.createPool({
+  host: process.env.MYSQLHOST,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE,
+  port: Number(process.env.MYSQLPORT),
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
 
 db.getConnection((err, connection) => {
   if (err) console.error("Erro ao conectar no MySQL:", err);
@@ -57,9 +66,6 @@ if (typeof routes.adm === 'function') routes.adm(app);
 if (typeof routes.loginPost === 'function') routes.loginPost(app);
 if (typeof routes.cadastro === 'function') routes.cadastro(app);
 
-app.get('/', (req, res) => res.send('Servidor funcionando!'));
-
-app.listen(port, '0.0.0.0');
+app.listen(port, '0.0.0.0', () => console.log(`Servidor rodando na porta: ${port}`));
 
 module.exports = { app, db };
-
