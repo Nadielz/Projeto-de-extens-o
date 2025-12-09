@@ -7,7 +7,7 @@ const mysql = require('mysql2');
 const app = express();
 const port = process.env.PORT || 5000;
 
-const db = mysql.createPool(process.env.MYSQL_URL);
+const db = mysql.createPool('mysql://root:rjsEdPfyBOxQShDLWepsENaQnQeQaJeo@mysql.railway.internal:3306/railway');
 
 db.getConnection((err, connection) => {
   if (err) {
@@ -20,6 +20,7 @@ db.getConnection((err, connection) => {
 
 app.set("view engine", "ejs");
 app.set('views', './app/views');
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
@@ -33,7 +34,7 @@ app.use((req, res, next) => {
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'chave_temporaria',
+    secret: 'MinhaChaveSuperSegura123!',
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }
@@ -63,6 +64,6 @@ if (typeof routes.adm === 'function') routes.adm(app);
 if (typeof routes.loginPost === 'function') routes.loginPost(app);
 if (typeof routes.cadastro === 'function') routes.cadastro(app);
 
-app.listen(port, () => console.log(`Servidor rodando na porta: http://localhost:${port}`));
+app.listen(port, '0.0.0.0', () => console.log(`Servidor rodando na porta: http://localhost:${port}`));
 
 module.exports = { app, db };
