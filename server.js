@@ -2,26 +2,10 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const routes = require('./app/routes/routes.js');
-const mysql = require('mysql2');
+const db = require('./db.js');
 
 const app = express();
 const port = process.env.PORT || 8080;
-
-const db = mysql.createPool({
-  host: process.env.MYSQLHOST,
-  user: process.env.MYSQLUSER,
-  password: process.env.MYSQLPASSWORD,
-  database: process.env.MYSQLDATABASE,
-  port: Number(process.env.MYSQLPORT),
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
-
-db.getConnection((err, connection) => {
-  if (err) console.error("Erro ao conectar no MySQL:", err);
-  else connection.release();
-});
 
 app.set("view engine", "ejs");
 app.set('views', './app/views');
@@ -39,7 +23,7 @@ app.use((req, res, next) => {
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || 'chave_temporaria',
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }
@@ -66,6 +50,8 @@ if (typeof routes.adm === 'function') routes.adm(app);
 if (typeof routes.loginPost === 'function') routes.loginPost(app);
 if (typeof routes.cadastro === 'function') routes.cadastro(app);
 
-app.listen(port, '0.0.0.0', () => console.log(`Servidor rodando na porta: ${port}`));
+app.get('/', (req, res) => res.send('Servidor funcionando!'));
+
+app.listen(port, '0.0.0.0', () => console.log(`Servidor rodando na porta: http://localhost:${port}`));
 
 module.exports = { app, db };
