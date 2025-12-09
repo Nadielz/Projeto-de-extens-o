@@ -73,6 +73,6 @@ if (typeof routes.adm === 'function') routes.adm(app);
 if (typeof routes.loginPost === 'function') routes.loginPost(app);
 if (typeof routes.cadastro === 'function') routes.cadastro(app);
 
-app.listen(port, () => console.log(`Servidor rodando na porta: http://localhost:${port}`));
+app.listen(port, '0.0.0.0', () => console.log(`Servidor rodando na porta: http://localhost:${port}`));
 
 module.exports = { app, db };
